@@ -1,785 +1,293 @@
 ---
+// ==========================================
+// HOMEPAGE CUSTOMIZATION
+// ==========================================
+// This is your site's main landing page.
+// Customize the content sections, text, and layout below.
+
 import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CityCard from '../components/CityCard.astro';
+import WalkCard from '../components/WalkCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import productData from '../content/data/main.json';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../components/FormattedDate.astro';
 
-const { product, seo } = productData;
-
-// Get blog posts
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
-
-// HD Image URLs
-const hdImages = {
-  portal1: "https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=2048&q=95",
-  portal2: "https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?w=2048&q=95",
-  texture: "https://images.unsplash.com/photo-1579546929662-711aa81148cf?w=2048&q=95",
-  product: "https://cs8.pikabu.ru/post_img/big/2016/04/27/6/1461748084167073788.jpg"
-};
+// Get content for the homepage
+const cities = await getCollection('cities');
+const walks = await getCollection('walks');
+// Change the number (3) to show more/fewer featured walks
+const featuredWalks = walks.slice(0, 3);
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={seo.title} description={seo.description} />
-		<style define:vars={{
-			portalBg1: `url(${hdImages.portal1})`,
-			portalBg2: `url(${hdImages.portal2})`,
-			textureBg: `url(${hdImages.texture})`
-		}}>
-			:root {
-				--primary: #2a623d;
-				--primary-dark: #1a472a;
-				--secondary: #97ce4c;
-				--text: #e0e0e0;
-				--background: #0d1f13;
-				--accent: #44281d;
-				--glow: rgba(151, 206, 76, 0.3);
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.hero {
+				position: relative;
+				height: 70vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				overflow: hidden;
 			}
 
-			body {
-				margin: 0;
-				font-family: 'Atkinson', sans-serif;
-				background: var(--background);
-				color: var(--text);
-				overflow-x: hidden;
-			}
-
-			main {
-				width: 100%;
-				max-width: 100%;
-				margin: 0;
-				padding: 0;
-			}
-
-			.container {
-				width: 100%;
-				max-width: 2400px;
-				margin: 0 auto;
-				padding: 0 2rem;
-			}
-
-			.portal-bg {
-				position: fixed;
+			.hero::before {
+				content: '';
+				position: absolute;
 				top: 0;
 				left: 0;
-				width: 100%;
-				height: 100%;
-				background: 
-					radial-gradient(circle at 10% 20%, rgba(42, 98, 61, 0.4) 0%, transparent 50%),
-					radial-gradient(circle at 90% 80%, rgba(151, 206, 76, 0.2) 0%, transparent 50%),
-					var(--background);
-				z-index: -1;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background: var(--textureBg) center/cover;
-					opacity: 0.05;
-					mix-blend-mode: overlay;
-				}
-			}
-
-			.hero {
-				min-height: 100vh;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				position: relative;
-				padding: 0;
-				overflow: hidden;
-				width: 100%;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					background: var(--portalBg1) center/cover;
-					opacity: 0.1;
-					mix-blend-mode: overlay;
-					animation: portalPulse 15s ease-in-out infinite;
-				}
-				&::after {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					background: var(--portalBg2) center/cover;
-					opacity: 0.1;
-					mix-blend-mode: color-dodge;
-					animation: portalPulse 20s ease-in-out infinite reverse;
-				}
-			}
-
-			@keyframes portalPulse {
-				0%, 100% { opacity: 0.1; transform: scale(1); }
-				50% { opacity: 0.15; transform: scale(1.1); }
+				right: 0;
+				bottom: 0;
+				background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff" fill-opacity="0.1" d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z"></path></svg>') bottom center no-repeat;
+				background-size: cover;
 			}
 
 			.hero-content {
-				width: 100%;
-				max-width: 2400px;
-				margin: 0 auto;
-				padding: 4rem 2rem;
-				display: flex;
-				align-items: center;
-				gap: 4rem;
-				text-align: left;
-				position: relative;
-				z-index: 2;
-				backdrop-filter: blur(10px);
-				background: rgba(13, 31, 19, 0.3);
-				border-top: 1px solid rgba(151, 206, 76, 0.1);
-				border-bottom: 1px solid rgba(151, 206, 76, 0.1);
-			}
-
-			.hero-text {
-				flex: 1;
-			}
-
-			.hero-image {
-				flex: 1;
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: -20px;
-					left: -20px;
-					right: -20px;
-					bottom: -20px;
-					background: radial-gradient(circle at center, var(--glow) 0%, transparent 70%);
-					z-index: -1;
-					animation: glowPulse 4s ease-in-out infinite;
-				}
-			}
-
-			@keyframes glowPulse {
-				0%, 100% { transform: scale(1); opacity: 0.5; }
-				50% { transform: scale(1.1); opacity: 0.8; }
-			}
-
-			.hero-image img {
-				width: 100%;
-				height: auto;
-				border-radius: 20px;
-				box-shadow: 
-					0 0 20px var(--glow),
-					0 0 40px var(--glow);
-				animation: productFloat 8s ease-in-out infinite;
-			}
-
-			@keyframes productFloat {
-				0%, 100% { transform: translateY(0) rotate(0deg); }
-				25% { transform: translateY(-10px) rotate(2deg); }
-				75% { transform: translateY(10px) rotate(-2deg); }
-			}
-
-			@keyframes float {
-				0%, 100% { transform: translateY(0); }
-				50% { transform: translateY(-20px); }
+				text-align: center;
+				color: white;
+				z-index: 1;
+				padding: 0 2rem;
 			}
 
 			.hero h1 {
-				font-size: clamp(4rem, 10vw, 8rem);
-				color: var(--secondary);
-				margin: 0;
-				text-shadow: 
-					0 0 10px var(--glow),
-					0 0 20px var(--glow),
-					0 0 40px var(--glow);
-				animation: pulse 4s ease-in-out infinite;
-				letter-spacing: -2px;
-				line-height: 0.9;
-			}
-
-			@keyframes pulse {
-				0%, 100% { text-shadow: 0 0 10px var(--glow), 0 0 20px var(--glow), 0 0 40px var(--glow); }
-				50% { text-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow), 0 0 60px var(--glow); }
+				font-size: 3.5rem;
+				margin-bottom: 1rem;
+				text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 			}
 
 			.hero p {
-				font-size: clamp(1.5rem, 3vw, 2rem);
-				margin: 2rem auto;
-				max-width: 800px;
-				line-height: 1.4;
-				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+				font-size: 1.5rem;
+				margin-bottom: 2rem;
+				opacity: 0.9;
 			}
 
 			.cta-button {
 				display: inline-block;
-				background: var(--secondary);
-				color: var(--primary-dark);
-				padding: 1.5rem 3rem;
-				border-radius: 50px;
-				font-size: 1.5rem;
-				font-weight: bold;
+				padding: 1rem 2rem;
+				background: white;
+				color: #667eea;
 				text-decoration: none;
-				transition: all 0.3s ease;
-				position: relative;
-				overflow: hidden;
-				margin-top: 2rem;
-				text-transform: uppercase;
-				letter-spacing: 2px;
-				box-shadow: 
-					0 0 10px var(--glow),
-					0 0 20px var(--glow);
-				backdrop-filter: blur(5px);
+				border-radius: 50px;
+				font-weight: 600;
+				transition: transform 0.2s, box-shadow 0.2s;
 			}
 
 			.cta-button:hover {
-				transform: scale(1.05) translateY(-5px);
-				background: #a8e650;
-				box-shadow: 
-					0 0 20px var(--glow),
-					0 0 40px var(--glow);
+				transform: translateY(-2px);
+				box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 			}
 
-			.cta-button::before {
-				content: '';
-				position: absolute;
-				top: -50%;
-				left: -50%;
-				width: 200%;
-				height: 200%;
-				background: rgba(255, 255, 255, 0.1);
-				transform: rotate(45deg);
-				animation: shine 3s infinite;
+			section {
+				padding: 4rem 0;
 			}
 
-			@keyframes shine {
-				0% { transform: translateX(-100%) rotate(45deg); }
-				100% { transform: translateX(100%) rotate(45deg); }
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 2rem;
 			}
 
-			.features, .testimonials, .specs {
-				width: 100%;
-				padding: 8rem 0;
+			h2 {
+				text-align: center;
+				font-size: 2.5rem;
+				margin-bottom: 3rem;
+				color: #333;
+			}
+
+			.cities-grid, .walks-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+				gap: 2rem;
 			}
 
 			.features {
-				background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-				clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background: var(--textureBg) center/cover;
-					opacity: 0.05;
-					mix-blend-mode: overlay;
-				}
+				background: #f8f9fa;
 			}
 
 			.features-grid {
 				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 				gap: 3rem;
-				padding: 0 2rem;
-				max-width: 2400px;
-				margin: 0 auto;
+				margin-top: 3rem;
 			}
 
-			.feature-card {
-				background: rgba(26, 71, 42, 0.8);
-				padding: 2rem;
-				border-radius: 20px;
-				transition: all 0.3s ease;
-				backdrop-filter: blur(10px);
-				border: 1px solid rgba(151, 206, 76, 0.2);
-				position: relative;
-				overflow: hidden;
-				min-height: 250px;
-				display: flex;
-				flex-direction: column;
-				justify-content: flex-start;
-				gap: 1rem;
-			}
-
-			.feature-card::before {
-				content: '';
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				background: linear-gradient(45deg, transparent, rgba(151, 206, 76, 0.1), transparent);
-				transform: translateX(-100%);
-				transition: 0.5s;
-			}
-
-			.feature-card:hover {
-				transform: translateY(-10px) scale(1.02);
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-			}
-
-			.feature-card:hover::before {
-				transform: translateX(100%);
-			}
-
-			.feature-card h3 {
-				color: var(--secondary);
-				font-size: 1.5rem;
-				margin: 0;
-				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-				line-height: 1.3;
-			}
-
-			.feature-card p {
-				margin: 0;
-				line-height: 1.6;
-				flex-grow: 1;
-			}
-
-			.testimonials {
-				background: var(--background);
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background: 
-						radial-gradient(circle at 20% 30%, rgba(151, 206, 76, 0.1) 0%, transparent 70%),
-						radial-gradient(circle at 80% 70%, rgba(42, 98, 61, 0.1) 0%, transparent 70%);
-				}
-			}
-
-			.testimonials-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 2rem;
-				padding: 0 2rem;
-				max-width: 2400px;
-				margin: 0 auto;
-			}
-
-			.testimonial-card {
-				background: rgba(42, 98, 61, 0.3);
-				padding: 2rem;
-				border-radius: 20px;
-				backdrop-filter: blur(10px);
-				border: 1px solid rgba(151, 206, 76, 0.1);
-				font-style: italic;
-				position: relative;
-				overflow: hidden;
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-				min-height: 200px;
-				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-				transition: transform 0.3s ease, box-shadow 0.3s ease;
-			}
-
-			.testimonial-card:hover {
-				transform: translateY(-5px);
-				box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-			}
-
-			.testimonial-card::after {
-				content: '"';
-				position: absolute;
-				bottom: -20px;
-				right: 20px;
-				font-size: 8rem;
-				color: rgba(151, 206, 76, 0.1);
-				font-family: serif;
-				pointer-events: none;
-			}
-
-			.testimonial-quote {
-				margin: 0 0 1.5rem 0;
-				font-size: 1.1rem;
-				line-height: 1.6;
-				flex-grow: 1;
-			}
-
-			.testimonial-name {
-				color: var(--secondary);
-				margin-top: auto;
-				font-style: normal;
-				font-weight: bold;
-				font-size: 1.2rem;
-				text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-				padding-top: 1rem;
-				border-top: 1px solid rgba(151, 206, 76, 0.1);
-			}
-
-			.specs {
-				background: linear-gradient(45deg, var(--primary-dark) 0%, var(--primary) 100%);
-				clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 95%);
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background: var(--textureBg) center/cover;
-					opacity: 0.05;
-					mix-blend-mode: overlay;
-				}
-			}
-
-			.spec-item {
+			.feature {
 				text-align: center;
-				padding: 2rem;
-				background: rgba(26, 71, 42, 0.5);
-				border-radius: 15px;
-				backdrop-filter: blur(5px);
-				border: 1px solid rgba(151, 206, 76, 0.1);
-				transition: transform 0.3s ease;
-				height: 100%;
+			}
+
+			.feature-icon {
+				width: 80px;
+				height: 80px;
+				margin: 0 auto 1.5rem;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				border-radius: 50%;
 				display: flex;
-				flex-direction: column;
-				justify-content: space-between;
-			}
-
-			.spec-item:hover {
-				transform: translateY(-5px);
-			}
-
-			.spec-label {
-				color: var(--secondary);
-				font-weight: bold;
-				font-size: 1.2rem;
-				margin-bottom: 1rem;
-				text-transform: uppercase;
-				letter-spacing: 2px;
-			}
-
-			.spec-value {
-				font-size: 1.1rem;
-				line-height: 1.6;
-			}
-
-			.blog-section {
-				padding: 8rem 0;
-				background: var(--background);
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background: 
-						radial-gradient(circle at 20% 30%, rgba(151, 206, 76, 0.1) 0%, transparent 70%),
-						radial-gradient(circle at 80% 70%, rgba(42, 98, 61, 0.1) 0%, transparent 70%);
-				}
-			}
-
-			.blog-grid {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 2rem;
-				padding: 0 2rem;
-				max-width: 2400px;
-				margin: 0 auto;
-			}
-
-			.blog-card {
-				background: rgba(26, 71, 42, 0.3);
-				border-radius: 20px;
-				overflow: hidden;
-				backdrop-filter: blur(10px);
-				border: 1px solid rgba(151, 206, 76, 0.1);
-				transition: all 0.3s ease;
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-			}
-
-			.blog-card:hover {
-				transform: translateY(-10px);
-				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-				border-color: rgba(151, 206, 76, 0.3);
-			}
-
-			.blog-image {
-				width: 100%;
-				height: 200px;
-				object-fit: cover;
-			}
-
-			.blog-content {
-				padding: 1.5rem;
-				flex-grow: 1;
-				display: flex;
-				flex-direction: column;
-			}
-
-			.blog-title {
-				color: var(--secondary);
-				font-size: 1.5rem;
-				margin: 0 0 1rem 0;
-				line-height: 1.2;
-			}
-
-			.blog-date {
-				color: rgba(var(--text), 0.7);
-				font-size: 0.9rem;
-				margin-bottom: 1rem;
-			}
-
-			.blog-description {
-				color: var(--text);
-				margin: 0;
-				flex-grow: 1;
-			}
-
-			.blog-link {
-				text-decoration: none;
-				color: inherit;
-				display: block;
-				height: 100%;
-			}
-
-			footer {
-				background: var(--background);
-				padding: 6rem 2rem;
-				text-align: center;
-				position: relative;
-			}
-
-			.social-links {
-				display: flex;
+				align-items: center;
 				justify-content: center;
-				gap: 2rem;
-				margin: 2rem 0;
-				flex-wrap: wrap;
+				color: white;
+				font-size: 2rem;
 			}
 
-			.social-links a {
-				color: var(--secondary);
-				text-decoration: none;
-				font-size: 1.2rem;
-				transition: all 0.3s ease;
-				padding: 0.5rem 1rem;
-				border: 1px solid rgba(151, 206, 76, 0.3);
-				border-radius: 5px;
-				backdrop-filter: blur(5px);
+			.feature h3 {
+				font-size: 1.5rem;
+				margin-bottom: 1rem;
+				color: #333;
 			}
 
-			.social-links a:hover {
-				background: rgba(151, 206, 76, 0.1);
-				transform: translateY(-3px);
-			}
-
-			.disclaimer {
-				max-width: 1200px;
-				margin: 2rem auto;
-				font-size: 0.9rem;
-				opacity: 0.8;
+			.feature p {
+				color: #666;
 				line-height: 1.6;
-				padding: 2rem;
-				background: rgba(26, 71, 42, 0.3);
-				border-radius: 10px;
-				backdrop-filter: blur(5px);
 			}
 
-			@media (max-width: 1024px) {
-				.hero-content {
-					flex-direction: column-reverse;
-					text-align: center;
-					padding: 2rem;
-				}
+			.view-all-link {
+				text-align: center;
+				margin-top: 3rem;
+			}
 
-				.hero-image {
-					max-width: 80%;
-				}
+			.view-all-link a {
+				display: inline-block;
+				padding: 0.75rem 2rem;
+				background: #667eea;
+				color: white;
+				text-decoration: none;
+				border-radius: 50px;
+				transition: background 0.2s;
+			}
 
-				.features-grid, .testimonials-grid, .specs-grid {
-					grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-					padding: 0 1rem;
-				}
+			.view-all-link a:hover {
+				background: #764ba2;
 			}
 
 			@media (max-width: 768px) {
-				.container {
-					padding: 0 1rem;
-				}
-
-				.hero-content {
-					padding: 2rem 1rem;
-				}
-
 				.hero h1 {
-					font-size: 3rem;
-				}
-
-				.hero p {
-					font-size: 1.2rem;
-				}
-
-				.cta-button {
-					padding: 1rem 2rem;
-					font-size: 1.2rem;
-				}
-
-				.features, .testimonials, .specs {
-					padding: 4rem 0;
-				}
-
-				.features-grid, .testimonials-grid, .specs-grid {
-					grid-template-columns: 1fr;
-				}
-
-				section h2 {
-					font-size: 2rem;
-					margin-bottom: 2rem;
-				}
-
-				.blog-grid {
-					grid-template-columns: 1fr;
-					padding: 0 1rem;
-				}
-			}
-
-			@media (min-width: 2000px) {
-				.features-grid, .testimonials-grid, .specs-grid {
-					max-width: 2400px;
-					grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-				}
-
-				.hero-content {
-					max-width: 1600px;
-				}
-
-				.hero h1 {
-					font-size: 10rem;
-				}
-
-				.hero p {
 					font-size: 2.5rem;
-					max-width: 1200px;
 				}
 
-				.cta-button {
+				.hero p {
+					font-size: 1.2rem;
+				}
+
+				.cities-grid, .walks-grid {
+					grid-template-columns: 1fr;
+				}
+
+				h2 {
 					font-size: 2rem;
-					padding: 2rem 4rem;
 				}
 			}
 		</style>
 	</head>
 	<body>
-		<div class="portal-bg"></div>
+		<Header />
 		<main>
+			<!-- ==========================================
+			     HERO SECTION - CUSTOMIZE TEXT & DESIGN
+			     ========================================== -->
 			<section class="hero">
 				<div class="hero-content">
-					<div class="hero-text">
-						<h1>{product.name}</h1>
-						<p class="tagline">{product.tagline}</p>
-						<p class="description">{product.description}</p>
-						<a href={product.callToAction.url} class="cta-button">
-							{product.callToAction.text}
-						</a>
-					</div>
-					<div class="hero-image">
-						<img src={hdImages.product} alt="The Plumbus - Everyone's favorite interdimensional household device" />
-					</div>
+					<!-- Main headline - update this text -->
+					<h1>Discover Your Next City Walk</h1>
+					<!-- Subheading - update this text -->
+					<p>Explore curated walking routes in cities around the world</p>
+					<!-- Call-to-action button - update text and link -->
+					<a href="/cities" class="cta-button">Start Exploring</a>
 				</div>
 			</section>
 
+			<!-- ==========================================
+			     FEATURES SECTION - CUSTOMIZE BENEFITS
+			     ========================================== -->
 			<section class="features">
 				<div class="container">
-					<h2>Interdimensional Features</h2>
+					<!-- Section title -->
+					<h2>Why Choose Our City Walks?</h2>
 					<div class="features-grid">
-						{product.features.map((feature) => (
-							<div class="feature-card">
-								<h3>{feature.title}</h3>
-								<p>{feature.description}</p>
-							</div>
-						))}
+						<!-- Feature 1 - update icon, title, and description -->
+						<div class="feature">
+							<div class="feature-icon">📍</div>
+							<h3>Curated Routes</h3>
+							<p>Each walk is carefully planned to showcase the best of every city, from famous landmarks to hidden local gems.</p>
+						</div>
+						<!-- Feature 2 - update icon, title, and description -->
+						<div class="feature">
+							<div class="feature-icon">⏱️</div>
+							<h3>Flexible Duration</h3>
+							<p>Choose walks that fit your schedule, from quick 1-hour strolls to full-day adventures.</p>
+						</div>
+						<!-- Feature 3 - update icon, title, and description -->
+						<div class="feature">
+							<div class="feature-icon">🗺️</div>
+							<h3>Detailed Information</h3>
+							<p>Get all the details you need including distance, difficulty level, and highlights along the way.</p>
+						</div>
+						
+						<!-- TO ADD MORE FEATURES: Copy one of the divs above and paste here -->
+						<!-- 
+						<div class="feature">
+							<div class="feature-icon">🎯</div>
+							<h3>Your Feature Title</h3>
+							<p>Your feature description here.</p>
+						</div>
+						-->
 					</div>
 				</div>
 			</section>
 
-			<section class="testimonials">
+			<!-- ==========================================
+			     CITIES SECTION - AUTOMATICALLY POPULATED
+			     ========================================== -->
+			<section>
 				<div class="container">
-					<h2>Multiversal Reviews</h2>
-					<div class="testimonials-grid">
-						{product.testimonials.map((testimonial) => (
-							<div class="testimonial-card">
-								<p class="testimonial-quote">"{testimonial.quote}"</p>
-								<div class="testimonial-name">- {testimonial.name}</div>
-							</div>
+					<!-- Section title -->
+					<h2>Popular Cities</h2>
+					<!-- This grid automatically shows all your cities -->
+					<div class="cities-grid">
+						{cities.map((city) => (
+							<CityCard
+								name={city.data.name}
+								country={city.data.country}
+								description={city.data.description}
+								totalWalks={city.data.totalWalks}
+								image={city.data.image}
+								href={`/cities/${city.id}`}
+							/>
 						))}
+					</div>
+					<div class="view-all-link">
+						<a href="/cities">View All Cities</a>
 					</div>
 				</div>
 			</section>
 
-			<section class="specs">
+			<!-- ==========================================
+			     FEATURED WALKS SECTION
+			     ========================================== -->
+			<section>
 				<div class="container">
-					<h2>Quantum Specifications</h2>
-					<div class="specs-grid">
-						{Object.entries(product.specs).map(([key, value]) => (
-							<div class="spec-item">
-								<div class="spec-label">{key}</div>
-								<div class="spec-value">{value}</div>
-							</div>
+					<!-- Section title -->
+					<h2>Featured Walks</h2>
+					<!-- This shows the first 3 walks (change number at top of file) -->
+					<div class="walks-grid">
+						{featuredWalks.map((walk) => (
+							<WalkCard
+								title={walk.data.title}
+								description={walk.data.description}
+								city={walk.data.city}
+								duration={walk.data.duration}
+								distance={walk.data.distance}
+								difficulty={walk.data.difficulty}
+								coverImage={walk.data.coverImage}
+								href={`/walks/${walk.id}`}
+							/>
 						))}
 					</div>
 				</div>
 			</section>
-
-			<section class="blog-section">
-				<div class="container">
-					<h2>Interdimensional Blog</h2>
-					<div class="blog-grid">
-						{posts.map((post) => (
-							<a href={`/blog/${post.id}/`} class="blog-link">
-								<article class="blog-card">
-									<img 
-										src={post.data.heroImage} 
-										alt="" 
-										class="blog-image"
-									/>
-									<div class="blog-content">
-										<h3 class="blog-title">{post.data.title}</h3>
-										<div class="blog-date">
-											<FormattedDate date={post.data.pubDate} />
-										</div>
-										<p class="blog-description">{post.data.description}</p>
-									</div>
-								</article>
-							</a>
-						))}
-					</div>
-				</div>
-			</section>
-
-			<footer>
-				<div class="container">
-					<div class="social-links">
-						{product.footer.socialLinks.map((link) => (
-							<a href={link.url} target="_blank" rel="noopener noreferrer">
-								{link.platform}
-							</a>
-						))}
-					</div>
-					<p class="disclaimer">{product.footer.legalDisclaimer}</p>
-					<p>Contact: <a href={`mailto:${product.footer.contactEmail}`}>{product.footer.contactEmail}</a></p>
-				</div>
-			</footer>
 		</main>
+		<Footer />
 	</body>
 </html>

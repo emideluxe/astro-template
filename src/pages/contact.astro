@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Contact Us"
+	description="Get in touch with the City Walks team"
+>
+<div class="content">
+	<h2>Get in Touch</h2>
+	<p>
+		We'd love to hear from you! Whether you have questions about a specific walk, 
+		suggestions for new routes, or want to contribute your own city expertise, 
+		we're here to help.
+	</p>
+
+	<div class="contact-methods">
+		<div class="contact-method">
+			<h3>📧 Email Us</h3>
+			<p>For general inquiries, route suggestions, or partnership opportunities:</p>
+			<p><strong>hello@citywalks.com</strong></p>
+		</div>
+
+		<div class="contact-method">
+			<h3>🗺️ Suggest a Route</h3>
+			<p>Know a great walking route that should be featured? Share it with us!</p>
+			<p><strong>routes@citywalks.com</strong></p>
+		</div>
+
+		<div class="contact-method">
+			<h3>🤝 Partnerships</h3>
+			<p>Tourism boards, local guides, and walking organizations - let's collaborate!</p>
+			<p><strong>partners@citywalks.com</strong></p>
+		</div>
+
+		<div class="contact-method">
+			<h3>🐛 Report Issues</h3>
+			<p>Found outdated information or technical problems? Help us improve!</p>
+			<p><strong>support@citywalks.com</strong></p>
+		</div>
+	</div>
+
+	<h2>Contribute a Walk</h2>
+	<p>
+		Are you a local expert, tour guide, or passionate walker? We're always looking for 
+		authentic routes curated by people who know their cities best. Here's what we look for:
+	</p>
+	
+	<ul>
+		<li><strong>Local Knowledge:</strong> Routes that showcase both famous spots and hidden gems</li>
+		<li><strong>Clear Navigation:</strong> Easy-to-follow paths with clear start and end points</li>
+		<li><strong>Cultural Context:</strong> Stories and historical background that bring places to life</li>
+		<li><strong>Practical Information:</strong> Realistic timing, difficulty levels, and useful tips</li>
+		<li><strong>Safety Considerations:</strong> Routes that are safe and accessible for most walkers</li>
+	</ul>
+
+	<h2>Response Times</h2>
+	<p>
+		We typically respond to all inquiries within 2-3 business days. For urgent matters 
+		or time-sensitive suggestions, please mention this in your subject line.
+	</p>
+
+	<div class="social-section">
+		<h2>Follow Our Journey</h2>
+		<p>Stay updated with new routes, walking tips, and community stories:</p>
+		<div class="social-links">
+			<a href="#" class="social-link">Instagram</a>
+			<a href="#" class="social-link">Twitter</a>
+			<a href="#" class="social-link">Facebook</a>
+		</div>
+	</div>
+</div>
+</BaseLayout>
+
+<style>
+	.content {
+		max-width: 1000px;
+		margin: 2rem auto;
+		padding: 0 2rem;
+	}
+	.contact-methods {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		gap: 2rem;
+		margin: 3rem 0;
+	}
+
+	.contact-method {
+		padding: 2rem;
+		background: #f8f9fa;
+		border-radius: 8px;
+		border-left: 4px solid #667eea;
+	}
+
+	.contact-method h3 {
+		margin-top: 0;
+		color: #333;
+	}
+
+	.contact-method p {
+		margin-bottom: 0.5rem;
+	}
+
+	.social-section {
+		margin-top: 3rem;
+		padding: 2rem;
+		background: #f8f9fa;
+		border-radius: 8px;
+		text-align: center;
+	}
+
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+
+	.social-link {
+		display: inline-block;
+		padding: 0.5rem 1rem;
+		background: #667eea;
+		color: white;
+		text-decoration: none;
+		border-radius: 4px;
+		transition: background 0.2s;
+	}
+
+	.social-link:hover {
+		background: #764ba2;
+	}
+
+	@media (max-width: 768px) {
+		.contact-methods {
+			grid-template-columns: 1fr;
+		}
+		
+		.social-links {
+			flex-direction: column;
+			align-items: center;
+		}
+	}
+</style>

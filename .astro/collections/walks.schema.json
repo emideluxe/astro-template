@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/walks",
+  "definitions": {
+    "walks": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "duration": {
+          "type": "string"
+        },
+        "distance": {
+          "type": "string"
+        },
+        "difficulty": {
+          "type": "string",
+          "enum": [
+            "easy",
+            "moderate",
+            "challenging"
+          ]
+        },
+        "startPoint": {
+          "type": "string"
+        },
+        "endPoint": {
+          "type": "string"
+        },
+        "highlights": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mapImage": {
+          "type": "string"
+        },
+        "coverImage": {
+          "type": "string"
+        },
+        "updatedDate": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "string",
+              "format": "date"
+            },
+            {
+              "type": "integer",
+              "format": "unix-time"
+            }
+          ]
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "city",
+        "duration",
+        "distance",
+        "difficulty",
+        "startPoint",
+        "endPoint",
+        "highlights"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

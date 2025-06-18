@@ -1,96 +1,97 @@
 ---
-import Layout from '../layouts/BlogPost.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout
-	title="About Plumbus Industries"
-	description="Learn about the history, mission, and interdimensional impact of Plumbus Industries"
-	pubDate={new Date('June 15 2024')}
-	heroImage="/blog-placeholder-about.jpg"
+<BaseLayout
+	title="About City Walks"
+	description="Learn about our mission to help people discover cities through curated walking routes"
 >
-	<h2>Our Interdimensional Legacy</h2>
+<div class="prose">
+	<h2>Our Mission</h2>
 	<p>
-		Since the dawn of interdimensional commerce, Plumbus Industries has been at the forefront of
-		household innovation. What began as a small workshop in Dimension C-137 has grown into a
-		multiverse-spanning enterprise, delivering quality Plumbuses to infinite realities.
+		City Walks was created to help people discover the soul of a city through the simple act of walking. 
+		We believe that the best way to truly experience a place is on foot, where you can notice the details, 
+		interact with locals, and stumble upon hidden gems that you'd never find from a car or bus.
 	</p>
 
-	<h2>The Plumbus Philosophy</h2>
+	<h2>Why Walking?</h2>
 	<p>
-		At Plumbus Industries, we believe that every home, regardless of dimensional origin, deserves
-		the comfort and convenience that only a Plumbus can provide. Our commitment to quality is
-		reflected in every carefully crafted Dinglebop and precisely applied Fleeb juice.
+		Walking is the most human way to explore. It connects us to our environment at the perfect pace - 
+		fast enough to cover ground, slow enough to really see. Every city has layers of history, culture, 
+		and character that reveal themselves only to those willing to wander on foot.
 	</p>
 
-	<h2>Sustainable Manufacturing</h2>
+	<h2>Our Curation Process</h2>
 	<p>
-		We take pride in our environmentally conscious manufacturing process. All Schleem used in
-		production is carefully recycled, and our Fleeb farms maintain the highest standards of ethical
-		cultivation. Every Plumbus is created with respect for the delicate balance of the multiverse.
-	</p>
-
-	<h2>Quality Assurance</h2>
-	<p>
-		Each Plumbus undergoes rigorous testing by certified Schlamis, ensuring compliance with
-		Galactic Federation standards. Our quality control process includes:
+		Each walking route is carefully researched and tested by local explorers and travel experts. 
+		We consider factors like:
 	</p>
 	<ul>
-		<li>Quantum stability verification</li>
-		<li>Fleeb juice concentration analysis</li>
-		<li>Dinglebop consistency testing</li>
-		<li>Interdimensional compatibility checks</li>
-		<li>Temporal paradox resistance evaluation</li>
+		<li>Historical significance and cultural value</li>
+		<li>Safety and accessibility for walkers</li>
+		<li>Mix of famous landmarks and local discoveries</li>
+		<li>Logical flow and compelling narrative</li>
+		<li>Availability of rest stops and facilities</li>
 	</ul>
 
-	<h2>Research & Innovation</h2>
+	<h2>For Every Walker</h2>
 	<p>
-		Our dedicated team of interdimensional scientists continues to push the boundaries of Plumbus
-		technology. Recent breakthroughs include enhanced Fleeb absorption rates and improved
-		Grumbo efficiency, making the modern Plumbus 50% more effective than previous generations.
+		Whether you're a first-time visitor looking for highlights or a local seeking new perspectives, 
+		our walks are designed for all levels. We provide clear difficulty ratings, estimated times, 
+		and detailed information to help you choose the perfect route for your interests and abilities.
 	</p>
 
-	<h2>Community Impact</h2>
+	<h2>Community Driven</h2>
 	<p>
-		Plumbus Industries is committed to giving back to the multiverse. Through our "Plumbus for
-		All" initiative, we've donated over 1 million Plumbuses to developing dimensions. We also
-		support education programs teaching proper Plumbus maintenance and appreciation across the
-		cosmos.
+		Our best routes come from passionate locals who know their cities inside and out. We work with 
+		historians, local guides, and urban explorers to ensure each walk tells authentic stories and 
+		showcases the real character of each destination.
 	</p>
 
-	<h2>Certifications & Awards</h2>
-	<ul>
-		<li>Galactic Federation Seal of Approval (3476 consecutive cycles)</li>
-		<li>Council of Ricks Innovation Award</li>
-		<li>Interdimensional Better Business Bureau A+++ Rating</li>
-		<li>Quantum Sustainability Certification</li>
-		<li>Best Places to Work in the Multiverse (Top 10)</li>
-	</ul>
-
-	<h2>Looking Forward</h2>
+	<h2>Beyond Tourism</h2>
 	<p>
-		As we continue to expand across dimensions, our mission remains unchanged: to provide every
-		household with the finest quality Plumbus while maintaining the highest standards of
-		interdimensional corporate responsibility. The future of Plumbus technology is bright, and
-		we're excited to share new innovations with customers across the multiverse.
+		We're not just about sightseeing - we're about connection. Our walks encourage sustainable, 
+		respectful exploration that benefits local communities. We highlight local businesses, 
+		cultural sites, and community spaces along every route.
 	</p>
 
 	<div class="contact-info">
-		<h2>Contact Us</h2>
+		<h2>Get Involved</h2>
 		<p>
-			For inquiries across any dimension:<br>
-			Interdimensional Email: contact@plumbus.temaprint.com<br>
-			Quantum Hotline: ∞-555-PLUMBUS<br>
-			Temporal Office Hours: All times simultaneously
+			Know a great walking route in your city? Have suggestions for improvements? 
+			We'd love to hear from you! Our community of walkers makes this platform possible.
 		</p>
 	</div>
+</div>
 
-	<div class="legal-notice">
-		<p>
-			<em>
-				All Plumbuses are manufactured in accordance with Galactic Federation regulations.
-				Temporal paradox insurance included with every purchase. Side effects may include
-				dimensional drift, quantum entanglement, and mild enlightenment.
-			</em>
-		</p>
-	</div>
-</Layout>
+<style>
+	.prose {
+		max-width: 800px;
+		margin: 2rem auto;
+		padding: 0 2rem;
+		line-height: 1.6;
+	}
+
+	.prose h2 {
+		color: #333;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+	}
+
+	.prose ul {
+		margin: 1rem 0;
+		padding-left: 2rem;
+	}
+
+	.prose li {
+		margin: 0.5rem 0;
+	}
+
+	.contact-info {
+		background: #f8f9fa;
+		padding: 2rem;
+		border-radius: 8px;
+		margin-top: 2rem;
+	}
+</style>
+</BaseLayout>

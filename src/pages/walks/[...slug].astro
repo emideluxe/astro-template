@@ -1,0 +1,44 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import WalkLayout from '../../layouts/WalkLayout.astro';
+
+export async function getStaticPaths() {
+	const walks = await getCollection('walks');
+	return walks.map((walk) => ({
+		params: { slug: walk.id },
+		props: { walkData: walk.data, walkId: walk.id },
+	}));
+}
+
+const { walkData, walkId } = Astro.props;
+---
+
+<!-- 
+CUSTOMIZATION GUIDE - WALK PAGES:
+1. To add new walks: Create new .md files in src/content/walks/
+2. Walk content: The markdown content below the frontmatter will be rendered here
+3. Walk metadata: Edit the frontmatter in each walk .md file
+4. Layout customization: Edit src/layouts/WalkLayout.astro
+-->
+
+<WalkLayout {...walkData}>
+	<div class="walk-content">
+		<p>This is a placeholder for walk content. The full markdown content will be rendered here once the content loader is properly configured.</p>
+		
+		<h3>Walk Information:</h3>
+		<ul>
+			<li><strong>Duration:</strong> {walkData.duration}</li>
+			<li><strong>Distance:</strong> {walkData.distance}</li>
+			<li><strong>Difficulty:</strong> {walkData.difficulty}</li>
+			<li><strong>Start:</strong> {walkData.startPoint}</li>
+			<li><strong>End:</strong> {walkData.endPoint}</li>
+		</ul>
+		
+		<h3>Route Highlights:</h3>
+		<ul>
+			{walkData.highlights.map((highlight) => (
+				<li>{highlight}</li>
+			))}
+		</ul>
+	</div>
+</WalkLayout>
