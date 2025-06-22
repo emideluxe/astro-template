@@ -6,8 +6,8 @@
 
 // 1. SITE TITLE & DESCRIPTION
 // These appear in the browser tab, search results, and social media shares
-export const SITE_TITLE = 'City Walks';
-export const SITE_DESCRIPTION = 'Discover amazing walks and routes through your city';
+export const SITE_TITLE = 'Walks Amsterdam';
+export const SITE_DESCRIPTION = 'Discover amazing walks and routes through Amsterdam';
 
 // 2. ADDITIONAL SITE SETTINGS (add more as needed)
 // Example: export const SITE_URL = 'https://yoursite.com';

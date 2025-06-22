@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+const walks = await getCollection('walks');
+const eastWalks = walks.filter(walk => walk.data.category === 'east');
+---
+
+<h1>East Walks</h1>
+<div class="walks-list">
+  {eastWalks.length === 0 ? (
+    <p>No walks available in this category yet.</p>
+  ) : (
+    eastWalks.map(walk => (
+      <a href={`/walks/${walk.id}`} class="walk-card">
+        <h2>{walk.data.title}</h2>
+        <p>{walk.data.description}</p>
+      </a>
+    ))
+  )}
+</div>

@@ -1,0 +1,86 @@
+---
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import WalkCard from '../../../components/WalkCard.astro';
+import { getCollection } from 'astro:content';
+const walks = await getCollection('walks');
+const centerWalks = walks.filter(walk => walk.data.category === 'center');
+
+// Mock walks for demonstration
+const mockCenterWalks = [
+  {
+    id: 'mock-canal-highlights',
+    data: {
+      title: 'Mock Canal Highlights',
+      description: 'A scenic stroll along Amsterdam’s most beautiful canals.',
+      city: 'amsterdam',
+      duration: '1 hour',
+      distance: '2 km',
+      difficulty: 'easy',
+      coverImage: '/blog-placeholder-1.jpg',
+    },
+  },
+  {
+    id: 'mock-historic-center',
+    data: {
+      title: 'Mock Historic Center',
+      description: 'Explore the heart of the city with this historic walk.',
+      city: 'amsterdam',
+      duration: '1.5 hours',
+      distance: '2.5 km',
+      difficulty: 'moderate',
+      coverImage: '/blog-placeholder-2.jpg',
+    },
+  },
+  {
+    id: 'mock-museum-route',
+    data: {
+      title: 'Mock Museum Route',
+      description: 'Visit the top museums and cultural spots in the center.',
+      city: 'amsterdam',
+      duration: '2 hours',
+      distance: '3 km',
+      difficulty: 'easy',
+      coverImage: '/blog-placeholder-3.jpg',
+    },
+  },
+];
+
+const allCenterWalks = [...centerWalks, ...mockCenterWalks];
+---
+
+<Header />
+<main>
+  <section>
+    <h1 style="text-align:center; margin-bottom:2rem;">Center Walks</h1>
+    <div class="walks-grid">
+      {allCenterWalks.length === 0 ? (
+        <p>No walks available in this category yet.</p>
+      ) : (
+        allCenterWalks.map(walk => (
+          <WalkCard
+            title={walk.data.title}
+            description={walk.data.description}
+            city={walk.data.city}
+            duration={walk.data.duration}
+            distance={walk.data.distance}
+            difficulty={walk.data.difficulty}
+            coverImage={walk.data.coverImage}
+            href={`/walks/${walk.id}`}
+          />
+        ))
+      )}
+    </div>
+  </section>
+</main>
+<Footer />
+
+<style>
+  .walks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 4rem;
+  }
+</style>

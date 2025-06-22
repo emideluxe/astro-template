@@ -192,74 +192,9 @@ const featuredWalks = walks.slice(0, 3);
 					<!-- Main headline - update this text -->
 					<h1>Discover Your Next City Walk</h1>
 					<!-- Subheading - update this text -->
-					<p>Explore curated walking routes in cities around the world</p>
+					<p>Explore curated walking routes in Amsterdam.</p>
 					<!-- Call-to-action button - update text and link -->
-					<a href="/cities" class="cta-button">Start Exploring</a>
-				</div>
-			</section>
-
-			<!-- ==========================================
-			     FEATURES SECTION - CUSTOMIZE BENEFITS
-			     ========================================== -->
-			<section class="features">
-				<div class="container">
-					<!-- Section title -->
-					<h2>Why Choose Our City Walks?</h2>
-					<div class="features-grid">
-						<!-- Feature 1 - update icon, title, and description -->
-						<div class="feature">
-							<div class="feature-icon">📍</div>
-							<h3>Curated Routes</h3>
-							<p>Each walk is carefully planned to showcase the best of every city, from famous landmarks to hidden local gems.</p>
-						</div>
-						<!-- Feature 2 - update icon, title, and description -->
-						<div class="feature">
-							<div class="feature-icon">⏱️</div>
-							<h3>Flexible Duration</h3>
-							<p>Choose walks that fit your schedule, from quick 1-hour strolls to full-day adventures.</p>
-						</div>
-						<!-- Feature 3 - update icon, title, and description -->
-						<div class="feature">
-							<div class="feature-icon">🗺️</div>
-							<h3>Detailed Information</h3>
-							<p>Get all the details you need including distance, difficulty level, and highlights along the way.</p>
-						</div>
-						
-						<!-- TO ADD MORE FEATURES: Copy one of the divs above and paste here -->
-						<!-- 
-						<div class="feature">
-							<div class="feature-icon">🎯</div>
-							<h3>Your Feature Title</h3>
-							<p>Your feature description here.</p>
-						</div>
-						-->
-					</div>
-				</div>
-			</section>
-
-			<!-- ==========================================
-			     CITIES SECTION - AUTOMATICALLY POPULATED
-			     ========================================== -->
-			<section>
-				<div class="container">
-					<!-- Section title -->
-					<h2>Popular Cities</h2>
-					<!-- This grid automatically shows all your cities -->
-					<div class="cities-grid">
-						{cities.map((city) => (
-							<CityCard
-								name={city.data.name}
-								country={city.data.country}
-								description={city.data.description}
-								totalWalks={city.data.totalWalks}
-								image={city.data.image}
-								href={`/cities/${city.id}`}
-							/>
-						))}
-					</div>
-					<div class="view-all-link">
-						<a href="/cities">View All Cities</a>
-					</div>
+					<a href="/walks" class="cta-button">Start Exploring</a>
 				</div>
 			</section>
 
@@ -284,6 +219,37 @@ const featuredWalks = walks.slice(0, 3);
 								href={`/walks/${walk.id}`}
 							/>
 						))}
+						{/* MOCK WALKS BELOW */}
+						<WalkCard
+							title="Mock Walk: Hidden Canals"
+							description="A secret route through Amsterdam's lesser-known canals."
+							city="amsterdam"
+							duration="1 hour"
+							distance="2 km"
+							difficulty="easy"
+							coverImage="/blog-placeholder-1.jpg"
+							href="#"
+						/>
+						<WalkCard
+							title="Mock Walk: Art & Parks"
+							description="Explore art installations and green spaces in the city."
+							city="amsterdam"
+							duration="1.5 hours"
+							distance="3 km"
+							difficulty="moderate"
+							coverImage="/blog-placeholder-2.jpg"
+							href="#"
+						/>
+						<WalkCard
+							title="Mock Walk: Foodie Tour"
+							description="Taste your way through Amsterdam's best street food spots."
+							city="amsterdam"
+							duration="2 hours"
+							distance="2.5 km"
+							difficulty="easy"
+							coverImage="/blog-placeholder-3.jpg"
+							href="#"
+						/>
 					</div>
 				</div>
 			</section>

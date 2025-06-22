@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const blogposts = await getCollection('blog');
+---
+
+<BaseLayout title="Blogposts" description="Read our latest blogposts and updates!">
+  <main>
+    <section>
+      <h1>Blogposts</h1>
+      <div class="blog-grid">
+        {blogposts.length === 0 && (
+          <p>No blogposts yet. Stay tuned!</p>
+        )}
+        {blogposts.map((post) => (
+          <article class="blog-card" href={`/blog/${post.slug || post.id}`}> 
+            <a href={`/blog/${post.slug || post.id}`}>
+              {post.data.heroImage && (
+                <img src={post.data.heroImage} alt={post.data.title} class="blog-image" />
+              )}
+              <div class="blog-content">
+                <h2>{post.data.title}</h2>
+                <p class="blog-desc">{post.data.description || 'This is a mock description for the blogpost.'}</p>
+                <p class="blog-date">{post.data.pubDate ? new Date(post.data.pubDate).toLocaleDateString() : '2025-06-22'}</p>
+              </div>
+            </a>
+          </article>
+        ))}
+        {/* MOCK ENTRIES FOR NOW */}
+        <article class="blog-card">
+          <a href="#">
+            <img src="/blog-placeholder-1.jpg" alt="Mock Blog 1" class="blog-image" />
+            <div class="blog-content">
+              <h2>Mock Blogpost 1</h2>
+              <p class="blog-desc">This is a mock description for the first blogpost. Replace with real content.</p>
+              <p class="blog-date">2025-06-22</p>
+            </div>
+          </a>
+        </article>
+        <article class="blog-card">
+          <a href="#">
+            <img src="/blog-placeholder-2.jpg" alt="Mock Blog 2" class="blog-image" />
+            <div class="blog-content">
+              <h2>Mock Blogpost 2</h2>
+              <p class="blog-desc">Another mock entry. Add your own blogposts in the content folder.</p>
+              <p class="blog-date">2025-06-21</p>
+            </div>
+          </a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .blog-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+    .blog-card a {
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .blog-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .blog-content {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-content h2 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      color: #333;
+    }
+    .blog-desc {
+      color: #555;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .blog-date {
+      color: #4078c0;
+      font-size: 0.9rem;
+      margin-top: auto;
+    }
+  </style>
+</BaseLayout>
+
+<!--
+How to add new blogposts:
+1. Go to src/content/blog/
+2. Add a new Markdown (.md) or MDX (.mdx) file. Example: my-first-post.md
+3. Use the following frontmatter at the top:
+---
+title: "My First Blogpost"
+description: "A short summary of the post."
+pubDate: 2025-06-22
+heroImage: "/blog-placeholder-1.jpg"
+---
+4. Write your blog content below the frontmatter.
+5. Save the file. It will appear automatically on this page.
+-->
