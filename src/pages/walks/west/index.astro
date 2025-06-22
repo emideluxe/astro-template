@@ -4,16 +4,19 @@ const walks = await getCollection('walks');
 const westWalks = walks.filter(walk => walk.data.category === 'west');
 ---
 
-<h1>West Walks</h1>
-<div class="walks-list">
-  {westWalks.length === 0 ? (
-    <p>No walks available in this category yet.</p>
-  ) : (
-    westWalks.map(walk => (
-      <a href={`/walks/${walk.id}`} class="walk-card">
-        <h2>{walk.data.title}</h2>
-        <p>{walk.data.description}</p>
-      </a>
-    ))
-  )}
-</div>
+<BaseLayout title="West Walks" description="Explore curated walks in Amsterdam's west.">
+  <main>
+    <section>
+      <h2>West Walks</h2>
+      <div class="walks-grid">
+        {walks.length === 0 ? (
+          <p>No walks in this category yet.</p>
+        ) : (
+          walks.map(walk => (
+            <WalkCard {...walk.data} href={`/walks/${walk.id}`} />
+          ))
+        )}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

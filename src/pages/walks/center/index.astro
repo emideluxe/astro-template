@@ -52,22 +52,13 @@ const allCenterWalks = [...centerWalks, ...mockCenterWalks];
 <Header />
 <main>
   <section>
-    <h1 style="text-align:center; margin-bottom:2rem;">Center Walks</h1>
+    <h2>Center Walks</h2>
     <div class="walks-grid">
       {allCenterWalks.length === 0 ? (
-        <p>No walks available in this category yet.</p>
+        <p>No walks in this category yet.</p>
       ) : (
         allCenterWalks.map(walk => (
-          <WalkCard
-            title={walk.data.title}
-            description={walk.data.description}
-            city={walk.data.city}
-            duration={walk.data.duration}
-            distance={walk.data.distance}
-            difficulty={walk.data.difficulty}
-            coverImage={walk.data.coverImage}
-            href={`/walks/${walk.id}`}
-          />
+          <WalkCard {...walk.data} href={`/walks/${walk.id}`} />
         ))
       )}
     </div>

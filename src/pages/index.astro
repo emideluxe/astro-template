@@ -16,8 +16,8 @@ import { getCollection } from 'astro:content';
 // Get content for the homepage
 const cities = await getCollection('cities');
 const walks = await getCollection('walks');
-// Change the number (3) to show more/fewer featured walks
-const featuredWalks = walks.slice(0, 3);
+// Remove template featured walks: show only your own walks
+const featuredWalks = walks.filter(walk => !['london-royal-parks','london-thames-path','paris-latin-quarter'].includes(walk.id)).slice(0, 3);
 ---
 
 <!doctype html>
@@ -202,55 +202,22 @@ const featuredWalks = walks.slice(0, 3);
 			     FEATURED WALKS SECTION
 			     ========================================== -->
 			<section>
-				<div class="container">
-					<!-- Section title -->
-					<h2>Featured Walks</h2>
-					<!-- This shows the first 3 walks (change number at top of file) -->
-					<div class="walks-grid">
-						{featuredWalks.map((walk) => (
-							<WalkCard
-								title={walk.data.title}
-								description={walk.data.description}
-								city={walk.data.city}
-								duration={walk.data.duration}
-								distance={walk.data.distance}
-								difficulty={walk.data.difficulty}
-								coverImage={walk.data.coverImage}
-								href={`/walks/${walk.id}`}
-							/>
-						))}
-						{/* MOCK WALKS BELOW */}
-						<WalkCard
-							title="Mock Walk: Hidden Canals"
-							description="A secret route through Amsterdam's lesser-known canals."
-							city="amsterdam"
-							duration="1 hour"
-							distance="2 km"
-							difficulty="easy"
-							coverImage="/blog-placeholder-1.jpg"
-							href="#"
-						/>
-						<WalkCard
-							title="Mock Walk: Art & Parks"
-							description="Explore art installations and green spaces in the city."
-							city="amsterdam"
-							duration="1.5 hours"
-							distance="3 km"
-							difficulty="moderate"
-							coverImage="/blog-placeholder-2.jpg"
-							href="#"
-						/>
-						<WalkCard
-							title="Mock Walk: Foodie Tour"
-							description="Taste your way through Amsterdam's best street food spots."
-							city="amsterdam"
-							duration="2 hours"
-							distance="2.5 km"
-							difficulty="easy"
-							coverImage="/blog-placeholder-3.jpg"
-							href="#"
-						/>
-					</div>
+				<h2 style="text-align:center; margin-bottom:2rem;">Featured Walks</h2>
+				<div class="walks-grid">
+					{featuredWalks.length === 0 ? (
+						<p>No featured walks yet.</p>
+					) : (
+						featuredWalks.map(walk => (
+							<WalkCard {...walk.data} href={`/walks/${walk.id}`} />
+						))
+					)}
+				</div>
+			</section>
+			<section>
+				<h2 style="text-align:center; margin-bottom:2rem;">Travel Tips Roulette</h2>
+				<div style="display:flex; flex-direction:column; align-items:center;">
+					<p style="max-width:600px; text-align:center; margin-bottom:2rem;">Feeling adventurous? Spin the roulette and get a random travel tip to enhance your next walk in Amsterdam!</p>
+					<a href="/tips-roulette" class="cta-button">Play Now</a>
 				</div>
 			</section>
 		</main>
